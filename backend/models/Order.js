@@ -34,6 +34,17 @@ Order.init(
       allowNull: false,
       defaultValue: 0,
     },
+    // Snapshot of the delivery zone selected at checkout. Stored as its own
+    // columns (rather than just a foreign key) so the order's history stays
+    // accurate even if an admin later renames, re-prices, or deletes the zone.
+    deliveryZoneId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    deliveryZoneName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     total: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
