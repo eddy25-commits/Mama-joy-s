@@ -26,6 +26,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminProductForm from "./pages/admin/AdminProductForm";
+import AdminDeliveryZones from "./pages/admin/AdminDeliveryZones";
 import AdminOrders from "./pages/admin/AdminOrders";
 
 function StorefrontLayout({ children }) {
@@ -95,6 +96,14 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <AdminProductForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/delivery-zones"
+              element={
+                <ProtectedRoute>
+                  <AdminDeliveryZones />
                 </ProtectedRoute>
               }
             />

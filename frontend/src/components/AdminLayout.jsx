@@ -13,6 +13,7 @@ export default function AdminLayout({ children }) {
     { to: "/admin", label: "Overview", end: true },
     { to: "/admin/products", label: "Products" },
     { to: "/admin/products/new", label: "Add Product" },
+    { to: "/admin/delivery-zones", label: "Delivery Charges" },
     { to: "/admin/orders", label: "Orders" },
   ];
 
