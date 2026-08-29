@@ -50,11 +50,7 @@
   font-weight: 700;
   margin: 0;
   letter-spacing: 0.01em;
-  background: linear-gradient(120deg, #a9782f 0%, #f1d78c 45%, #caa14d 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-black);
 }
 
 .cart-drawer-close {
