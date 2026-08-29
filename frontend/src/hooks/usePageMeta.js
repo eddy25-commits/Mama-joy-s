@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const SITE_TITLE_SUFFIX = "Mama Joy's Cosmetics and Collections";
 const DEFAULT_DESCRIPTION =
-  "Shop quality skincare, makeup, hair care, and beauty essentials from Mama Joy's Cosmetics and Collections in Bantama, Kumasi. Secure Paystack checkout in Ghana cedis.";
+  "Shop quality skincare, makeup, hair care, and beauty essentials from Mama Joy's Cosmetics and Collections in Bantima, Kumasi. Secure Paystack checkout in Ghana cedis.";
 
 /**
  * Sets document.title and the meta description tag for the current page,
