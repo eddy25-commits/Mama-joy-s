@@ -6,7 +6,6 @@ import Loader from "../components/Loader";
 import { SITE } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import "./Shop.css";
-
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category") || "All";
@@ -18,7 +17,6 @@ export default function Shop() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   useEffect(() => {
     setLoading(true);
     setError("");
@@ -26,21 +24,18 @@ export default function Shop() {
     if (category !== "All") params.category = category;
     const currentSearch = searchParams.get("search");
     if (currentSearch) params.search = currentSearch;
-
     api
       .get("/products", { params })
       .then((res) => setProducts(res.data))
       .catch(() => setError("Could not load products. Please try again shortly."))
       .finally(() => setLoading(false));
   }, [category, searchParams]);
-
   const handleCategoryClick = (cat) => {
     const next = new URLSearchParams(searchParams);
     if (cat === "All") next.delete("category");
     else next.set("category", cat);
     setSearchParams(next);
   };
-
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const next = new URLSearchParams(searchParams);
@@ -48,14 +43,12 @@ export default function Shop() {
     else next.delete("search");
     setSearchParams(next);
   };
-
   return (
     <div className="shop-page">
       <div className="container">
         <span className="eyebrow">The Collection</span>
         <h1>Shop All Products</h1>
         <hr className="gold-rule" />
-
         <form className="shop-search" onSubmit={handleSearchSubmit}>
           <input
             type="search"
@@ -64,11 +57,10 @@ export default function Shop() {
             onChange={(e) => setSearch(e.target.value)}
             aria-label="Search products"
           />
-          <button type="submit" className="btn btn-primary btn-sm">
+          <button type="submit" className="btn btn-gold btn-sm">
             Search
           </button>
         </form>
-
         <div className="shop-categories">
           {["All", ...SITE.categories].map((cat) => (
             <button
@@ -81,7 +73,6 @@ export default function Shop() {
             </button>
           ))}
         </div>
-
         {loading ? (
           <Loader label="Loading products..." />
         ) : error ? (
