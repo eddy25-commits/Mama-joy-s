@@ -23,6 +23,12 @@ export default function ProductDetail() {
   );
 
   useEffect(() => {
+    if (!id || id === "undefined") {
+      setLoading(false);
+      setError("Product not found.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     setAdded(false);

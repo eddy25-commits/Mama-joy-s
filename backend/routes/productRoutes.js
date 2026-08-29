@@ -8,6 +8,14 @@ const { filesToImageRecords, deleteUploadedFile } = require("../utils/fileStorag
 
 const router = express.Router();
 
+const serializeProduct = (product) => {
+  const data = product && typeof product.toJSON === "function" ? product.toJSON() : { ...product };
+  if (data && data.id !== undefined && data._id === undefined) {
+    data._id = data.id;
+  }
+  return data;
+};
+
 // @route   GET /api/products
 // @desc    Get all active products (public) - supports ?category=&search=&featured=true
 router.get(
@@ -27,7 +35,7 @@ router.get(
     }
 
     const products = await Product.findAll({ where, order: [["createdAt", "DESC"]] });
-    res.json(products);
+    res.json(products.map(serializeProduct));
   })
 );
 
@@ -38,7 +46,7 @@ router.get(
   protect,
   asyncHandler(async (req, res) => {
     const products = await Product.findAll({ order: [["createdAt", "DESC"]] });
-    res.json(products);
+    res.json(products.map(serializeProduct));
   })
 );
 
@@ -52,7 +60,7 @@ router.get(
       res.status(404);
       throw new Error("Product not found");
     }
-    res.json(product);
+    res.json(serializeProduct(product));
   })
 );
 
@@ -83,7 +91,7 @@ router.post(
       images,
     });
 
-    res.status(201).json(product);
+    res.status(201).json(serializeProduct(product));
   })
 );
 
@@ -128,7 +136,7 @@ router.put(
     product.images = currentImages;
 
     const updated = await product.save();
-    res.json(updated);
+    res.json(serializeProduct(updated));
   })
 );
 
