@@ -22,7 +22,16 @@ export default function SplashScreen({ onFinish }) {
 
   return (
     <div className={`splash-screen ${fadingOut ? "is-fading" : ""}`} role="status" aria-label="Loading">
-      <img src="/splash-logo.jpg" alt="Mama Joy's Cosmetics and Collections" className="splash-logo" />
+      <div className="splash-content">
+        <span className="splash-logo-ring">
+          <img src="/logo.png" alt="MJ Cosmetics and Collections" className="splash-logo-mark" />
+        </span>
+        <span className="splash-logo-name">MJ</span>
+        <span className="splash-logo-sub">Cosmetics &amp; Collections</span>
+        <span className="splash-slogan">
+          Quality beauty essentials for the woman who knows her worth.
+        </span>
+      </div>
     </div>
   );
 }
