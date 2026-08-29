@@ -247,6 +247,19 @@
   margin-bottom: 14px;
 }
 
+/* ---------- Buttons (Start Shopping / Checkout) ---------- */
+.cart-drawer-empty .btn,
+.cart-drawer-footer .btn {
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-drawer-empty .btn:hover,
+.cart-drawer-footer .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(180, 140, 40, 0.28);
+}
+
 /* ---------- Small phones ---------- */
 @media (max-width: 480px) {
   .cart-drawer {
