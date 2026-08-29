@@ -86,21 +86,21 @@ export default function AdminProducts() {
             <tbody>
               {products.map((p) => (
                 <tr key={p._id}>
-                  <td>
+                  <td data-label="Image">
                     <div className="admin-product-thumb">
                       {p.images?.[0]?.url ? <img src={p.images[0].url} alt={p.name} /> : null}
                     </div>
                   </td>
-                  <td>{p.name}</td>
-                  <td>{p.category}</td>
-                  <td>{formatGHS(p.price)}</td>
-                  <td>{p.stock}</td>
-                  <td>
+                  <td data-label="Name">{p.name}</td>
+                  <td data-label="Category">{p.category}</td>
+                  <td data-label="Price">{formatGHS(p.price)}</td>
+                  <td data-label="Stock">{p.stock}</td>
+                  <td data-label="Status">
                     <span className={`badge ${p.isActive ? "badge-success" : "badge-error"}`}>
                       {p.isActive ? "Active" : "Hidden"}
                     </span>
                   </td>
-                  <td>
+                  <td data-label="Actions">
                     <div className="admin-product-actions">
                       <Link to={`/admin/products/${p._id}/edit`} className="btn btn-outline btn-sm">
                         Edit
