@@ -45,7 +45,7 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
-          
+          <a
             className="navbar-link-phone"
             href={SITE.phoneHref}
             style={{ "--i": links.length }}
