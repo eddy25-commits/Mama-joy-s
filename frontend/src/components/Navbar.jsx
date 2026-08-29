@@ -19,9 +19,15 @@ export default function Navbar() {
     <header className="navbar">
       <div className="container navbar-inner">
         <Link to="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          <img src="/logo.png" alt="Mama Joy's Cosmetics and Collections" className="navbar-logo-mark" />
+          <span className="navbar-logo-ring">
+            <img
+              src="/logo.png"
+              alt="Joy & Gilt Cosmetics and Collections"
+              className="navbar-logo-mark"
+            />
+          </span>
           <span className="navbar-logo-text">
-            <span className="navbar-logo-mj">MJ</span>
+            <span className="navbar-logo-name">Joy &amp; Gilt</span>
             <span className="navbar-logo-sub">Cosmetics &amp; Collections</span>
           </span>
         </Link>
@@ -51,10 +57,15 @@ export default function Navbar() {
             aria-label={`Open cart, ${itemCount} item${itemCount === 1 ? "" : "s"}`}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-2.3 5H17M17 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM9 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-2.3 5H17M17 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM9 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             {itemCount > 0 && <span className="navbar-cart-count">{itemCount}</span>}
           </button>
+
           <button
             type="button"
             className="navbar-burger"
