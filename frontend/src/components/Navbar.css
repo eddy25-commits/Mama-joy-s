@@ -70,7 +70,7 @@
 
 .navbar-logo-name {
   font-family: var(--font-wordmark);
-  font-size: 1.9rem;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
   font-weight: 700;
   letter-spacing: 0.01em;
   background: linear-gradient(120deg, #a9782f 0%, #f1d78c 45%, #caa14d 100%);
@@ -82,8 +82,8 @@
 
 .navbar-logo-sub {
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
+  font-size: clamp(0.52rem, 1.6vw, 0.68rem);
+  letter-spacing: clamp(0.08em, 1vw, 0.22em);
   text-transform: uppercase;
   color: var(--color-charcoal);
   font-weight: 500;
@@ -91,7 +91,7 @@
   white-space: nowrap;
 }
 
-/* ---------- Nav links ---------- */
+/* ---------- Nav links (desktop) ---------- */
 .navbar-links {
   display: flex;
   align-items: center;
@@ -134,7 +134,19 @@
 }
 
 .navbar-link-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--color-black);
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-link-phone:hover {
+  opacity: 1;
 }
 
 /* ---------- Actions ---------- */
@@ -217,41 +229,86 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ---------- Tablet / mobile menu ---------- */
+/* ---------- Mobile dropdown ---------- */
 @media (max-width: 860px) {
   .navbar-links {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    left: 12px;
+    right: 12px;
     background: var(--color-gold-soft);
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
     padding: 0 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
-    border-bottom: 1px solid var(--gold-surface-line);
+    opacity: 0;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 18px 30px -12px rgba(20, 17, 15, 0.25);
+    border: 1px solid var(--gold-surface-line);
+    border-top: none;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
   }
 
   .navbar-links.is-open {
-    max-height: 360px;
-    padding: 14px 20px 22px;
+    max-height: 420px;
+    opacity: 1;
+    padding: 10px 20px 22px;
   }
 
   .navbar-link {
     width: 100%;
-    padding: 12px 0;
+    padding: 13px 2px;
     border-bottom: 1px solid rgba(20, 17, 15, 0.08);
+    opacity: 0;
+    transform: translateY(-6px);
   }
 
   .navbar-link::after {
     display: none;
   }
 
+  .navbar-links.is-open .navbar-link {
+    animation: navLinkIn 0.35s ease forwards;
+    animation-delay: calc(var(--i) * 0.05s);
+  }
+
+  .navbar-link-phone {
+    justify-content: center;
+    margin-top: 14px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, #a9782f, #caa14d 55%, #f1d78c);
+    color: var(--color-black);
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  .navbar-links.is-open .navbar-link-phone {
+    animation: navLinkIn 0.35s ease forwards;
+    animation-delay: calc(var(--i) * 0.05s);
+  }
+
   .navbar-burger {
     display: flex;
+  }
+}
+
+@keyframes navLinkIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-links.is-open .navbar-link,
+  .navbar-links.is-open .navbar-link-phone {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -269,16 +326,8 @@
   }
 
   .navbar-logo-ring {
-    width: 46px;
-    height: 46px;
-  }
-
-  .navbar-logo-name {
-    font-size: 1.4rem;
-  }
-
-  .navbar-logo-sub {
-    display: none;
+    width: 44px;
+    height: 44px;
   }
 
   .navbar-cart {
