@@ -100,5 +100,28 @@
 @media (max-width: 700px) {
   .order-detail-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .order-card-header {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .order-card-header-meta {
+    gap: 10px;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .order-card-body {
+    padding: 0 16px 18px;
+  }
+
+  .order-status-control {
+    max-width: none;
   }
 }
