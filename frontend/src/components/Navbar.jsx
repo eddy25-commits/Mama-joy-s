@@ -22,12 +22,12 @@ export default function Navbar() {
           <span className="navbar-logo-ring">
             <img
               src="/logo.png"
-              alt="Joy & Gilt Cosmetics and Collections"
+              alt="MJ Cosmetics and Collections"
               className="navbar-logo-mark"
             />
           </span>
           <span className="navbar-logo-text">
-            <span className="navbar-logo-name">Joy &amp; Gilt</span>
+            <span className="navbar-logo-name">MJ</span>
             <span className="navbar-logo-sub">Cosmetics &amp; Collections</span>
           </span>
         </Link>
@@ -68,8 +68,9 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="navbar-burger"
+            className={`navbar-burger ${menuOpen ? "is-open" : ""}`}
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
           >
             <span />
