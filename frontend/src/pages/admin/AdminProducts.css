@@ -1,0 +1,29 @@
+.admin-products-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-product-thumb {
+  width: 44px;
+  height: 44px;
+  background: var(--color-gold-soft);
+  overflow: hidden;
+}
+.admin-product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-product-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-delete-btn:hover {
+  background: var(--color-error);
+  border-color: var(--color-error);
+  color: var(--color-white);
+}

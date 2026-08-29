@@ -1,0 +1,38 @@
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-black);
+  padding: 24px;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.admin-login-mark {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+.admin-login-card h1 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.admin-login-sub {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 24px;
+}
+
+.admin-login-card .field {
+  text-align: left;
+}

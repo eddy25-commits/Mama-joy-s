@@ -1,0 +1,32 @@
+{
+  "name": "mama-joys-cosmetics-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Mama Joy's Cosmetics and Collections",
+  "main": "server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed:admin": "node scripts/seedAdmin.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
