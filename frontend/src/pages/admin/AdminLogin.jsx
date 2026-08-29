@@ -31,7 +31,9 @@ export default function AdminLogin() {
   return (
     <div className="admin-login">
       <form className="admin-login-card card" onSubmit={handleSubmit}>
-        <img src="/logo.png" alt="Mama Joy's Cosmetics and Collections" className="admin-login-mark" />
+        <span className="admin-login-ring">
+          <img src="/logo.png" alt="Mama Joy's Cosmetics and Collections" className="admin-login-mark" />
+        </span>
         <h1>Admin Login</h1>
         <p className="admin-login-sub">Mama Joy&rsquo;s Cosmetics and Collections</p>
 
