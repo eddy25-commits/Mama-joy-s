@@ -64,7 +64,7 @@ export default function Home() {
           <h2>Shop by Category</h2>
           <hr className="gold-rule" />
           <div className="category-grid">
-            {SITE.categories.slice(0, 6).map((cat) => (
+            {SITE.categories.map((cat) => (
               <Link key={cat} to={`/shop?category=${encodeURIComponent(cat)}`} className="category-tile">
                 {cat}
               </Link>
