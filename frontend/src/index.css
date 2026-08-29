@@ -24,8 +24,9 @@
 
   /* Layout */
   --max-width: 1240px;
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
 }
 
 * {
@@ -117,10 +118,18 @@ img {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 500;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   transition: all 0.2s ease;
   white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
 }
 
 .btn-primary {
@@ -132,10 +141,13 @@ img {
   background: var(--color-gold);
   border-color: var(--color-gold);
   color: var(--color-black);
+  box-shadow: 0 10px 24px rgba(184, 145, 47, 0.3);
 }
 .btn-primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-outline {
@@ -146,6 +158,7 @@ img {
 .btn-outline:hover {
   background: var(--color-black);
   color: var(--color-gold-light);
+  box-shadow: 0 10px 24px rgba(20, 17, 15, 0.16);
 }
 
 .btn-gold {
@@ -157,6 +170,7 @@ img {
   background: var(--color-black);
   color: var(--color-gold-light);
   border-color: var(--color-black);
+  box-shadow: 0 10px 24px rgba(20, 17, 15, 0.2);
 }
 
 .btn-block {
@@ -166,6 +180,13 @@ img {
 .btn-sm {
   padding: 9px 18px;
   font-size: 0.72rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
 }
 
 input,
@@ -207,6 +228,7 @@ label {
   background: var(--color-white);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
+  box-shadow: 0 6px 20px rgba(20, 17, 15, 0.05);
 }
 
 .badge {
@@ -220,7 +242,7 @@ label {
 }
 .badge-gold {
   background: var(--color-gold-soft);
-  color: var(--color-gold);
+  color: var(--color-gold-deep);
 }
 .badge-success {
   background: #e5f0e6;
