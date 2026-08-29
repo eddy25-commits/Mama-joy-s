@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import api, { getErrorMessage } from "../../api/client";
@@ -16,6 +16,8 @@ const emptyForm = {
   isFeatured: false,
 };
 
+const MAX_IMAGES = 5;
+
 export default function AdminProductForm() {
   const { id } = useParams();
   const isEdit = Boolean(id);
@@ -29,6 +31,7 @@ export default function AdminProductForm() {
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [dragActive, setDragActive] = useState(false);
 
   useEffect(() => {
     if (!isEdit) return;
@@ -51,18 +54,31 @@ export default function AdminProductForm() {
       .finally(() => setLoading(false));
   }, [id, isEdit]);
 
+  const activeImageCount = existingImages.length - removeImageIds.length + newFiles.length;
+  const slotsLeft = Math.max(0, MAX_IMAGES - activeImageCount);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
   };
 
-  const handleFilesSelected = (e) => {
-    const files = Array.from(e.target.files || []);
-    const totalCurrent = existingImages.length - removeImageIds.length + newFiles.length;
-    const allowed = files.slice(0, Math.max(0, 5 - totalCurrent));
+  const addFiles = (fileList) => {
+    const files = Array.from(fileList || []).filter((f) => f.type.startsWith("image/"));
+    const allowed = files.slice(0, slotsLeft);
+    if (!allowed.length) return;
     setNewFiles((prev) => [...prev, ...allowed]);
     setNewPreviews((prev) => [...prev, ...allowed.map((f) => URL.createObjectURL(f))]);
+  };
+
+  const handleFilesSelected = (e) => {
+    addFiles(e.target.files);
     e.target.value = "";
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+    if (slotsLeft > 0) addFiles(e.dataTransfer.files);
   };
 
   const removeNewFile = (idx) => {
@@ -111,21 +127,42 @@ export default function AdminProductForm() {
     }
   };
 
+  const visibleExisting = useMemo(
+    () => existingImages.filter((img) => !removeImageIds.includes(img.publicId)),
+    [existingImages, removeImageIds]
+  );
+  const isCover = (index) => index === 0;
+
   if (loading) return <AdminLayout><Loader label="Loading product..." /></AdminLayout>;
 
   return (
     <AdminLayout>
-      <h1>{isEdit ? "Edit Product" : "Add New Product"}</h1>
+      <div className="product-form-header">
+        <div>
+          <span className="eyebrow">{isEdit ? "Edit Item" : "New Item"}</span>
+          <h1>{isEdit ? "Edit Product" : "Add New Product"}</h1>
+        </div>
+      </div>
       <hr className="gold-rule" />
 
       {error && <div className="alert alert-error">{error}</div>}
 
       <form className="product-form" onSubmit={handleSubmit}>
         <div className="product-form-grid">
-          <div>
+          <div className="form-card card">
+            <h2 className="form-card-title">Product Details</h2>
+            <p className="form-card-subtitle">The essentials customers will see on the shop page.</p>
+
             <div className="field">
               <label htmlFor="name">Product Name *</label>
-              <input id="name" name="name" required value={form.name} onChange={handleChange} />
+              <input
+                id="name"
+                name="name"
+                placeholder="e.g. Rose Gold Radiance Serum"
+                required
+                value={form.name}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="field">
@@ -133,6 +170,7 @@ export default function AdminProductForm() {
               <textarea
                 id="description"
                 name="description"
+                placeholder="Describe the product, its benefits, and how to use it..."
                 required
                 rows={5}
                 value={form.description}
@@ -143,16 +181,20 @@ export default function AdminProductForm() {
             <div className="product-form-row">
               <div className="field">
                 <label htmlFor="price">Price (GHS) *</label>
-                <input
-                  id="price"
-                  name="price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  required
-                  value={form.price}
-                  onChange={handleChange}
-                />
+                <div className="input-prefix-group">
+                  <span className="input-prefix">GHS</span>
+                  <input
+                    id="price"
+                    name="price"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    required
+                    value={form.price}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
               <div className="field">
                 <label htmlFor="stock">Stock Quantity</label>
@@ -161,6 +203,7 @@ export default function AdminProductForm() {
                   name="stock"
                   type="number"
                   min="0"
+                  placeholder="0"
                   value={form.stock}
                   onChange={handleChange}
                 />
@@ -180,61 +223,129 @@ export default function AdminProductForm() {
               </div>
               <div className="field">
                 <label htmlFor="brand">Brand (optional)</label>
-                <input id="brand" name="brand" value={form.brand} onChange={handleChange} />
+                <input
+                  id="brand"
+                  name="brand"
+                  placeholder="e.g. Mama Joy's"
+                  value={form.brand}
+                  onChange={handleChange}
+                />
               </div>
             </div>
 
-            <label className="product-form-checkbox">
-              <input
-                type="checkbox"
-                name="isFeatured"
-                checked={form.isFeatured}
-                onChange={handleChange}
-              />
-              Feature this product on the homepage
+            <label className="feature-toggle">
+              <span className="feature-toggle-text">
+                <span className="feature-toggle-title">Feature on homepage</span>
+                <span className="feature-toggle-hint">Shown in the “Handpicked” section on the storefront.</span>
+              </span>
+              <span className="switch">
+                <input
+                  type="checkbox"
+                  name="isFeatured"
+                  checked={form.isFeatured}
+                  onChange={handleChange}
+                />
+                <span className="switch-track" aria-hidden="true" />
+              </span>
             </label>
           </div>
 
-          <div>
-            <div className="field">
-              <label>Product Images (up to 5)</label>
-              <div className="product-image-grid">
-                {existingImages.map((img) => (
-                  <div
-                    key={img.publicId}
-                    className={`product-image-tile ${removeImageIds.includes(img.publicId) ? "is-removed" : ""}`}
+          <div className="form-card card">
+            <div className="form-card-title-row">
+              <div>
+                <h2 className="form-card-title">Product Images</h2>
+                <p className="form-card-subtitle">First photo is used as the cover image.</p>
+              </div>
+              <span className="image-count-badge">
+                {activeImageCount}/{MAX_IMAGES}
+              </span>
+            </div>
+
+            <div className="product-image-grid">
+              {visibleExisting.map((img, idx) => (
+                <div key={img.publicId} className="product-image-tile">
+                  {isCover(idx) && <span className="product-image-cover-tag">Cover</span>}
+                  <img src={img.url} alt="" />
+                  <button
+                    type="button"
+                    className="product-image-remove"
+                    aria-label="Remove image"
+                    onClick={() => toggleRemoveExisting(img.publicId)}
                   >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+
+              {existingImages
+                .filter((img) => removeImageIds.includes(img.publicId))
+                .map((img) => (
+                  <div key={img.publicId} className="product-image-tile is-removed">
                     <img src={img.url} alt="" />
                     <button
                       type="button"
-                      className="product-image-remove"
+                      className="product-image-undo"
                       onClick={() => toggleRemoveExisting(img.publicId)}
                     >
-                      {removeImageIds.includes(img.publicId) ? "Undo" : "Remove"}
+                      Undo
                     </button>
                   </div>
                 ))}
-                {newPreviews.map((src, idx) => (
-                  <div key={src} className="product-image-tile">
-                    <img src={src} alt="" />
-                    <button type="button" className="product-image-remove" onClick={() => removeNewFile(idx)}>
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <input type="file" accept="image/*" multiple onChange={handleFilesSelected} />
-              <p className="product-form-hint">JPG, PNG, or WEBP. Max 5MB each.</p>
+
+              {newPreviews.map((src, idx) => (
+                <div key={src} className="product-image-tile">
+                  {isCover(visibleExisting.length + idx) && (
+                    <span className="product-image-cover-tag">Cover</span>
+                  )}
+                  <img src={src} alt="" />
+                  <button
+                    type="button"
+                    className="product-image-remove"
+                    aria-label="Remove image"
+                    onClick={() => removeNewFile(idx)}
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+
+              {slotsLeft > 0 && (
+                <label
+                  className={`product-image-dropzone ${dragActive ? "is-dragging" : ""}`}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setDragActive(true);
+                  }}
+                  onDragLeave={() => setDragActive(false)}
+                  onDrop={handleDrop}
+                >
+                  <input type="file" accept="image/*" multiple hidden onChange={handleFilesSelected} />
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                    <path
+                      d="M12 16V4m0 0 4 4m-4-4-4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>Add Photos</span>
+                </label>
+              )}
             </div>
+
+            <p className="product-form-hint">JPG, PNG, or WEBP &middot; up to 5 photos &middot; max 5MB each</p>
           </div>
         </div>
 
         <div className="product-form-actions">
-          <button type="submit" className="btn btn-primary" disabled={saving}>
-            {saving ? "Saving..." : isEdit ? "Save Changes" : "Add Product"}
-          </button>
           <button type="button" className="btn btn-outline" onClick={() => navigate("/admin/products")}>
             Cancel
+          </button>
+          <button type="submit" className="btn btn-primary" disabled={saving}>
+            {saving ? "Saving..." : isEdit ? "Save Changes" : "Add Product"}
           </button>
         </div>
       </form>
