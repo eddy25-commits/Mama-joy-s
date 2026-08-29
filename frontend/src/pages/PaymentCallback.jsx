@@ -5,26 +5,22 @@ import Loader from "../components/Loader";
 import { formatGHS } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import "./PaymentCallback.css";
-
 export default function PaymentCallback() {
   usePageMeta("Order Confirmation");
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState("verifying"); // verifying | success | failed | error
   const [order, setOrder] = useState(null);
   const [error, setError] = useState("");
-
   useEffect(() => {
     const reference =
       searchParams.get("reference") ||
       searchParams.get("trxref") ||
       sessionStorage.getItem("mjc_last_reference");
-
     if (!reference) {
       setStatus("error");
       setError("We couldn't find your payment reference.");
       return;
     }
-
     api
       .get(`/payment/verify/${reference}`)
       .then((res) => {
@@ -37,11 +33,9 @@ export default function PaymentCallback() {
         setError(getErrorMessage(err));
       });
   }, [searchParams]);
-
   if (status === "verifying") {
     return <Loader label="Confirming your payment..." />;
   }
-
   return (
     <div className="container payment-callback">
       {status === "success" && order && (
@@ -75,7 +69,6 @@ export default function PaymentCallback() {
           </Link>
         </div>
       )}
-
       {status === "failed" && (
         <div className="callback-card callback-failed">
           <div className="callback-icon">&times;</div>
@@ -84,12 +77,11 @@ export default function PaymentCallback() {
             Your payment could not be confirmed. If an amount was deducted, it will be
             reversed by Paystack automatically. You can try again below.
           </p>
-          <Link to="/checkout" className="btn btn-primary">
+          <Link to="/checkout" className="btn btn-gold">
             Try Again
           </Link>
         </div>
       )}
-
       {status === "error" && (
         <div className="callback-card callback-failed">
           <div className="callback-icon">!</div>
