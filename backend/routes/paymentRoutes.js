@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler");
 const { sequelize } = require("../config/db");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const DeliveryZone = require("../models/DeliveryZone");
 
 const router = express.Router();
 
@@ -39,7 +40,7 @@ const decrementStockForOrder = async (order) => {
 router.post(
   "/initialize",
   asyncHandler(async (req, res) => {
-    const { customer, items, deliveryFee } = req.body;
+    const { customer, items, deliveryZoneId } = req.body;
 
     if (!customer || !customer.name || !customer.email || !customer.phone || !customer.address) {
       res.status(400);
@@ -76,7 +77,20 @@ router.post(
       });
     }
 
-    const fee = Number(deliveryFee) || 0;
+    // The delivery fee is never trusted from the client — only a zone ID is
+    // accepted, and its price is looked up here so a tampered request body
+    // can't be used to pay less than the admin-configured rate.
+    if (!deliveryZoneId) {
+      res.status(400);
+      throw new Error("Please select a delivery region");
+    }
+    const zone = await DeliveryZone.findOne({ where: { id: deliveryZoneId, isActive: true } });
+    if (!zone) {
+      res.status(400);
+      throw new Error("Selected delivery region is no longer available. Please choose another.");
+    }
+
+    const fee = Number(zone.fee);
     const total = subtotal + fee;
     const orderNumber = generateOrderNumber();
     const reference = `${orderNumber}-${crypto.randomBytes(4).toString("hex")}`;
@@ -87,6 +101,8 @@ router.post(
       items: validatedItems,
       subtotal,
       deliveryFee: fee,
+      deliveryZoneId: zone.id,
+      deliveryZoneName: zone.name,
       total,
       paystackReference: reference,
       paymentStatus: "pending",
