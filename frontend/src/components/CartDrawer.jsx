@@ -25,10 +25,19 @@ export default function CartDrawer() {
             &times;
           </button>
         </div>
-
         {items.length === 0 ? (
           <div className="cart-drawer-empty">
-            <p>Your bag is empty.</p>
+            <span className="cart-empty-ring">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path
+                  d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-2.3 5H17M17 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM9 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <p className="cart-empty-title">Your bag is empty</p>
+            <p className="cart-empty-note">Everything you add will show up here.</p>
             <Link to="/shop" className="btn btn-gold" onClick={() => setIsOpen(false)}>
               Start Shopping
             </Link>
@@ -77,7 +86,6 @@ export default function CartDrawer() {
                 </div>
               ))}
             </div>
-
             <div className="cart-drawer-footer">
               <div className="cart-subtotal">
                 <span>Subtotal</span>
