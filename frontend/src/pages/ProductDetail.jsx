@@ -137,7 +137,7 @@ export default function ProductDetail() {
                   +
                 </button>
               </div>
-              <button type="button" className="btn btn-primary" onClick={handleAdd}>
+              <button type="button" className="btn btn-gold" onClick={handleAdd}>
                 Add to Bag
               </button>
             </div>
