@@ -15,16 +15,88 @@
   pointer-events: none;
 }
 
-.splash-logo {
-  width: min(340px, 62vw);
-  height: auto;
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 24px;
+}
+
+/* ---------- Logo (matches navbar) ---------- */
+.splash-logo-ring {
+  width: min(140px, 34vw);
+  height: min(140px, 34vw);
+  border-radius: 50%;
+  padding: 4px;
+  flex-shrink: 0;
+  background: conic-gradient(
+    from 180deg,
+    #d4af37,
+    #f1d78c,
+    #d4af37,
+    #a9782f,
+    #d4af37
+  );
+  box-shadow: 0 8px 30px rgba(180, 140, 40, 0.35);
   animation: splash-in 0.9s ease forwards;
 }
 
+.splash-logo-mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #000000;
+  background: #000000;
+}
+
+/* ---------- Shop name + slogan ---------- */
+.splash-logo-name {
+  font-family: var(--font-wordmark);
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(120deg, #a9782f 0%, #f1d78c 45%, #caa14d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: splash-text-in 0.6s ease forwards;
+  animation-delay: 0.5s;
+}
+
+.splash-logo-sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.65rem, 2vw, 0.78rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  opacity: 0;
+  animation: splash-text-in 0.6s ease forwards;
+  animation-delay: 0.65s;
+}
+
+.splash-slogan {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 260px;
+  margin-top: 6px;
+  opacity: 0;
+  animation: splash-text-in 0.6s ease forwards;
+  animation-delay: 0.8s;
+}
+
+/* ---------- Animations ---------- */
 @keyframes splash-in {
   from {
     opacity: 0;
-    transform: scale(0.92);
+    transform: scale(0.85);
   }
   to {
     opacity: 1;
@@ -32,9 +104,25 @@
   }
 }
 
+@keyframes splash-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .splash-logo {
+  .splash-logo-ring,
+  .splash-logo-name,
+  .splash-logo-sub,
+  .splash-slogan {
     animation: none;
+    opacity: 1;
+    transform: none;
   }
   .splash-screen {
     transition: none;
