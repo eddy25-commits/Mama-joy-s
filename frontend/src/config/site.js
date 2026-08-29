@@ -1,8 +1,8 @@
 export const SITE = {
   businessName: "Mama Joy's Cosmetics and Collections",
   shortName: "Mama Joy's",
-  location: "Bantama, Kumasi",
-  fullAddress: "Bantama, Kumasi, Ghana",
+  location: "Bantima, Kumasi",
+  fullAddress: "Bantima, Kumasi, Ghana",
   phone: "0244948390",
   phoneHref: "tel:+233244948390",
   whatsappHref: "https://wa.me/233244948390",
