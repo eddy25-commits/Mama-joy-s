@@ -74,9 +74,30 @@
   margin-top: 32px;
 }
 
+.product-form-actions .btn {
+  flex: 1 1 auto;
+}
+
 @media (max-width: 800px) {
   .product-form-grid {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .product-image-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .product-form-actions {
+    flex-direction: column;
+    gap: 10px;
   }
 }
