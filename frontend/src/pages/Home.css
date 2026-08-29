@@ -135,14 +135,32 @@
 .categories {
   background: var(--color-cream);
 }
+
+/* ---------- Shop by Category: horizontal scrollable row ---------- */
 .category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold-soft) transparent;
+}
+.category-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.category-grid::-webkit-scrollbar-thumb {
+  background: var(--color-gold-soft);
+  border-radius: 999px;
 }
 .category-tile {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-width: 150px;
   background: var(--color-white);
   border: 1px solid var(--color-gold-soft);
+  border-radius: 16px;
   padding: 26px 18px;
   text-align: center;
   font-family: var(--font-display);
@@ -155,6 +173,7 @@
   color: var(--color-black);
   border-color: var(--color-gold);
 }
+
 .featured {
   background: var(--color-white);
 }
@@ -196,9 +215,6 @@
 }
 @media (max-width: 900px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .category-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .promise-grid {
