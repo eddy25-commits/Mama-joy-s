@@ -78,15 +78,15 @@ export default function AdminDashboard() {
             <tbody>
               {orders.slice(0, 6).map((o) => (
                 <tr key={o._id}>
-                  <td>{o.orderNumber}</td>
-                  <td>{o.customer.name}</td>
-                  <td>{formatGHS(o.total)}</td>
-                  <td>
+                  <td data-label="Order">{o.orderNumber}</td>
+                  <td data-label="Customer">{o.customer.name}</td>
+                  <td data-label="Total">{formatGHS(o.total)}</td>
+                  <td data-label="Payment">
                     <span className={`badge ${o.paymentStatus === "paid" ? "badge-success" : "badge-error"}`}>
                       {o.paymentStatus}
                     </span>
                   </td>
-                  <td>{o.orderStatus}</td>
+                  <td data-label="Status">{o.orderStatus}</td>
                 </tr>
               ))}
             </tbody>
