@@ -82,7 +82,7 @@ export default function Checkout() {
       <hr className="gold-rule" />
 
       <div className="checkout-grid">
-        <form className="checkout-form" onSubmit={handleSubmit}>
+        <form className="checkout-form card" onSubmit={handleSubmit}>
           {error && <div className="alert alert-error">{error}</div>}
 
           <div className="field">
@@ -146,7 +146,7 @@ export default function Checkout() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
+          <button type="submit" className="btn btn-gold btn-block" disabled={submitting}>
             {submitting ? "Redirecting to Paystack..." : `Pay ${formatGHS(total)} with Paystack`}
           </button>
           <p className="checkout-secure-note">
