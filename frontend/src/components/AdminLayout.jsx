@@ -1,10 +1,13 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./AdminLayout.css";
 
 export default function AdminLayout({ children }) {
   const { admin, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
     { to: "/admin", label: "Overview", end: true },
@@ -13,37 +16,75 @@ export default function AdminLayout({ children }) {
     { to: "/admin/orders", label: "Orders" },
   ];
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const handleLogout = () => {
     logout();
     navigate("/admin/login");
   };
 
   return (
-    <div className="admin-layout">
-      <aside className="admin-sidebar">
-        <div className="admin-sidebar-brand">
-          <img src="/logo.png" alt="" className="admin-sidebar-mark" />
-          <span>Admin</span>
-        </div>
-        <nav className="admin-sidebar-nav">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.end}
-              className={({ isActive }) => `admin-nav-link ${isActive ? "is-active" : ""}`}
+    <div className="admin-shell">
+      <header className="admin-topbar">
+        <div className="container admin-topbar-inner">
+          <div className="admin-topbar-brand">
+            <span className="admin-topbar-ring">
+              <img src="/logo.png" alt="" className="admin-topbar-mark" />
+            </span>
+            <span className="admin-topbar-text">
+              <span className="admin-topbar-name">MJ Admin</span>
+              <span className="admin-topbar-sub">Mama Joy&rsquo;s Cosmetics</span>
+            </span>
+          </div>
+
+          <nav className={`admin-topbar-links ${menuOpen ? "is-open" : ""}`}>
+            {links.map((link, i) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.end}
+                className={({ isActive }) => `admin-nav-link ${isActive ? "is-active" : ""}`}
+                style={{ "--i": i }}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+            <div className="admin-topbar-user" style={{ "--i": links.length }}>
+              Signed in as <strong>{admin?.name}</strong>
+            </div>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm admin-logout-btn"
+              style={{ "--i": links.length + 1 }}
+              onClick={handleLogout}
             >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="admin-sidebar-footer">
-          <div className="admin-sidebar-user">{admin?.name}</div>
-          <button type="button" className="btn btn-outline btn-sm btn-block" onClick={handleLogout}>
-            Log Out
+              Log Out
+            </button>
+          </nav>
+
+          <button
+            type="button"
+            className={`admin-burger ${menuOpen ? "is-open" : ""}`}
+            aria-label="Toggle admin menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
           </button>
         </div>
-      </aside>
+      </header>
+
       <main className="admin-content">
         <div className="container admin-content-inner">{children}</div>
       </main>
