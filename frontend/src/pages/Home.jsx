@@ -28,7 +28,7 @@ export default function Home() {
       <section className="hero">
         <div className="container hero-inner">
           <div className="hero-content">
-            <span className="eyebrow">Bantama, Kumasi</span>
+            <span className="eyebrow">Bantima, Kumasi</span>
             <h1 className="hero-title">
               Beauty that <span>speaks</span> for itself
             </h1>
