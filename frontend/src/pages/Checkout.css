@@ -1,7 +1,6 @@
 .checkout-page {
   padding: 48px 0 90px;
 }
-
 .checkout-empty {
   padding: 100px 0;
   text-align: center;
@@ -11,22 +10,117 @@
 }
 .checkout-empty p {
   margin-bottom: 24px;
-  color: #777;
+  color: var(--color-charcoal);
 }
 
+/* ---------- Layout ---------- */
 .checkout-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 48px;
+  gap: 40px;
   align-items: start;
-  margin-top: 24px;
+  margin-top: 32px;
+}
+
+/* ---------- Shared card treatment (matches home page tiles/hero visual) ---------- */
+.checkout-form,
+.checkout-summary {
+  background: var(--color-white);
+  border: 1px solid var(--color-gold-soft);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(20, 17, 15, 0.06);
+}
+
+.checkout-form {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ---------- Fields ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-black);
+  letter-spacing: 0.01em;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--color-gold-soft);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: var(--color-black);
+  background: var(--color-cream);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #9c9285;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: var(--color-white);
+  box-shadow: 0 0 0 3px var(--color-gold-light);
+}
+.field textarea {
+  resize: vertical;
+}
+
+/* ---------- Alert ---------- */
+.alert {
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+}
+.alert-error {
+  background: #fbeaea;
+  border: 1px solid #e6b4b4;
+  color: #a63d3d;
+}
+
+/* ---------- Buttons (reuses home page's gold pill style) ---------- */
+.checkout-form .btn {
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.checkout-form .btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(180, 140, 40, 0.35);
+}
+.checkout-form .btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .checkout-form .btn {
+    transition: none;
+  }
+  .checkout-form .btn:hover:not(:disabled) {
+    transform: none;
+  }
 }
 
 .checkout-secure-note {
   font-size: 0.78rem;
   color: #888;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 4px;
 }
 .checkout-secure-note a {
   color: var(--color-gold-deep);
@@ -37,48 +131,53 @@
   color: var(--color-black);
 }
 
+/* ---------- Order Summary ---------- */
 .checkout-summary {
   padding: 28px;
   position: sticky;
   top: 100px;
 }
-
 .checkout-summary h2 {
+  font-family: var(--font-display);
   font-size: 1.2rem;
   margin-bottom: 16px;
+  color: var(--color-black);
 }
-
 .checkout-summary-item {
   display: flex;
   justify-content: space-between;
+  gap: 12px;
   font-size: 0.85rem;
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--color-line);
   color: var(--color-charcoal);
 }
-
 .checkout-summary-row {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
   padding: 10px 0;
+  color: var(--color-charcoal);
 }
-
 .checkout-summary-total {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  border-top: 1px solid var(--color-line);
+  color: var(--color-gold-deep);
+  border-top: 1px solid var(--color-gold-light);
   margin-top: 4px;
-  padding-top: 14px;
+  padding-top: 16px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .checkout-grid {
     grid-template-columns: 1fr;
   }
   .checkout-summary {
     position: static;
     order: -1;
+  }
+  .checkout-form {
+    padding: 24px;
   }
 }
