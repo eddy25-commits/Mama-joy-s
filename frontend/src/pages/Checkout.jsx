@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import api, { getErrorMessage } from "../api/client";
@@ -15,17 +15,28 @@ export default function Checkout() {
     name: "",
     email: "",
     phone: "",
-    address: "",
-    city: "Kumasi",
     notes: "",
   });
+  const [deliveryZones, setDeliveryZones] = useState([]);
+  const [selectedZoneId, setSelectedZoneId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const isKumasi = form.city.trim().toLowerCase().includes("kumasi");
-  const deliveryFee = isKumasi ? SITE.deliveryFeeKumasi : SITE.deliveryFeeOther;
+  useEffect(() => {
+    api
+      .get("/delivery-zones")
+      .then((res) => {
+        setDeliveryZones(res.data || []);
+      })
+      .catch(() => {
+        setError("Unable to load delivery regions right now. Please refresh and try again.");
+      });
+  }, []);
+
+  const selectedZone = deliveryZones.find((zone) => String(zone.id) === String(selectedZoneId)) || null;
+  const deliveryFee = selectedZone ? Number(selectedZone.fee) : 0;
   const total = useMemo(() => subtotal + deliveryFee, [subtotal, deliveryFee]);
-  const deliveryLabel = isKumasi ? "Free" : formatGHS(deliveryFee);
+  const deliveryLabel = deliveryFee === 0 ? "Free" : formatGHS(deliveryFee);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -40,6 +51,11 @@ export default function Checkout() {
       return;
     }
 
+    if (!selectedZoneId) {
+      setError("Please select a delivery region.");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const payload = {
@@ -49,6 +65,7 @@ export default function Checkout() {
           name: i.name,
           quantity: i.quantity,
         })),
+        deliveryZoneId: Number(selectedZoneId),
         deliveryFee,
       };
 
@@ -118,21 +135,20 @@ export default function Checkout() {
           </div>
 
           <div className="field">
-            <label htmlFor="city">City / Town</label>
-            <input id="city" name="city" required value={form.city} onChange={handleChange} />
-          </div>
-
-          <div className="field">
-            <label htmlFor="address">Delivery Address</label>
-            <textarea
-              id="address"
-              name="address"
+            <label htmlFor="deliveryZone">Select your delivery area</label>
+            <select
+              id="deliveryZone"
+              value={selectedZoneId}
+              onChange={(e) => setSelectedZoneId(e.target.value)}
               required
-              rows={3}
-              value={form.address}
-              onChange={handleChange}
-              placeholder="Street, landmark, house number"
-            />
+            >
+              <option value="">Choose your delivery area</option>
+              {deliveryZones.map((zone) => (
+                <option key={zone.id} value={zone.id}>
+                  {zone.name} {Number(zone.fee) === 0 ? "- Free" : `- ${formatGHS(zone.fee)}`}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="field">
@@ -176,7 +192,7 @@ export default function Checkout() {
             <span>{formatGHS(subtotal)}</span>
           </div>
           <div className="checkout-summary-row">
-            <span>Delivery ({isKumasi ? "Kumasi" : "Outside Kumasi"})</span>
+            <span>Delivery ({selectedZone ? selectedZone.name : "Not selected"})</span>
             <span>{deliveryLabel}</span>
           </div>
           <div className="checkout-summary-row checkout-summary-total">

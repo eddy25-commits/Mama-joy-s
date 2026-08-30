@@ -42,9 +42,9 @@ router.post(
   asyncHandler(async (req, res) => {
     const { customer, items, deliveryZoneId } = req.body;
 
-    if (!customer || !customer.name || !customer.email || !customer.phone || !customer.address) {
+    if (!customer || !customer.name || !customer.email || !customer.phone) {
       res.status(400);
-      throw new Error("Please provide full customer details (name, email, phone, address)");
+      throw new Error("Please provide full customer details (name, email, phone)");
     }
 
     if (!items || !Array.isArray(items) || items.length === 0) {
