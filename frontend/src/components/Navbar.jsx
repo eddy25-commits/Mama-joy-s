@@ -64,7 +64,7 @@ export default function Navbar() {
             className="navbar-admin-login"
             onClick={() => setMenuOpen(false)}
           >
-            Admin Sign In
+            Sign In
           </Link>
         </nav>
 
