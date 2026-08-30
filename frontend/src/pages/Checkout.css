@@ -51,7 +51,8 @@
   letter-spacing: 0.01em;
 }
 .field input,
-.field textarea {
+.field textarea,
+.field select {
   width: 100%;
   border: 1px solid var(--color-gold-soft);
   border-radius: 10px;
@@ -66,7 +67,8 @@
   color: #9c9285;
 }
 .field input:focus,
-.field textarea:focus {
+.field textarea:focus,
+.field select:focus {
   outline: none;
   border-color: var(--color-gold);
   background: var(--color-white);
@@ -74,6 +76,15 @@
 }
 .field textarea {
   resize: vertical;
+}
+.field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-charcoal) 50%),
+    linear-gradient(135deg, var(--color-charcoal) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 38px;
 }
 
 /* ---------- Alert ---------- */
@@ -179,5 +190,43 @@
   }
   .checkout-form {
     padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .checkout-page {
+    padding-top: 28px;
+    padding-bottom: 56px;
+  }
+
+  .checkout-empty {
+    padding: 80px 0 60px;
+  }
+
+  .checkout-form,
+  .checkout-summary {
+    border-radius: 16px;
+  }
+
+  .checkout-form {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+
+  .checkout-summary {
+    padding: 20px 16px;
+  }
+
+  .checkout-summary-item,
+  .checkout-summary-row {
+    font-size: 0.82rem;
+  }
+
+  .checkout-summary-total {
+    font-size: 1.1rem;
+  }
+
+  .checkout-secure-note {
+    font-size: 0.72rem;
   }
 }

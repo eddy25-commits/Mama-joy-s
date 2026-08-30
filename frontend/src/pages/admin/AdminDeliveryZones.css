@@ -37,6 +37,17 @@
   margin: 0;
 }
 
+.free-delivery-toggle {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+input:disabled {
+  background: #f5f1e8;
+  cursor: not-allowed;
+  color: #7a7268;
+}
+
 .admin-zones-actions {
   display: flex;
   flex-wrap: wrap;

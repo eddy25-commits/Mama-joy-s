@@ -10,6 +10,7 @@ const emptyForm = {
   fee: "",
   sortOrder: 0,
   isActive: true,
+  isFree: false,
 };
 
 export default function AdminDeliveryZones() {
@@ -35,6 +36,25 @@ export default function AdminDeliveryZones() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === "isFree") {
+      setForm((prev) => ({
+        ...prev,
+        isFree: checked,
+        fee: checked ? "0" : prev.fee,
+      }));
+      return;
+    }
+
+    if (name === "fee") {
+      setForm((prev) => ({
+        ...prev,
+        fee: value,
+        isFree: value === "0" || value === 0,
+      }));
+      return;
+    }
+
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -50,8 +70,13 @@ export default function AdminDeliveryZones() {
     e.preventDefault();
     setError("");
 
-    if (!form.name.trim() || form.fee === "" || form.fee === null) {
-      setError("Please provide a delivery zone name and fee.");
+    if (!form.name.trim()) {
+      setError("Please provide a delivery area name.");
+      return;
+    }
+
+    if (form.fee === "" || form.fee === null) {
+      setError("Please provide a delivery fee or mark the area as free delivery.");
       return;
     }
 
@@ -88,6 +113,7 @@ export default function AdminDeliveryZones() {
       fee: zone.fee,
       sortOrder: zone.sortOrder ?? 0,
       isActive: zone.isActive,
+      isFree: Number(zone.fee) === 0,
     });
   };
 
@@ -137,6 +163,11 @@ export default function AdminDeliveryZones() {
             </select>
           </div>
 
+          <label className="toggle-row free-delivery-toggle">
+            <input type="checkbox" name="isFree" checked={form.isFree} onChange={handleChange} />
+            <span>Free delivery for this area</span>
+          </label>
+
           <div className="field">
             <label htmlFor="zone-fee">Delivery fee (GHS)</label>
             <input
@@ -148,6 +179,7 @@ export default function AdminDeliveryZones() {
               value={form.fee}
               onChange={handleChange}
               placeholder="0.00"
+              disabled={form.isFree}
             />
           </div>
 
