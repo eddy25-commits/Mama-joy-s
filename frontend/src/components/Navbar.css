@@ -149,6 +149,29 @@
   opacity: 1;
 }
 
+.navbar-admin-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gold-surface-line);
+  background: linear-gradient(135deg, rgba(169, 120, 47, 0.12), rgba(212, 175, 55, 0.18));
+  color: var(--color-black);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.15rem;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.navbar-admin-login:hover {
+  border-color: var(--color-gold-light, #d4af37);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+  transform: translateY(-1px);
+}
+
 /* ---------- Actions ---------- */
 .navbar-actions {
   display: flex;
@@ -274,7 +297,7 @@
     animation-delay: calc(var(--i) * 0.05s);
   }
 
-  .navbar-link-phone {
+    .navbar-link-phone {
     justify-content: center;
     margin-top: 14px;
     padding: 12px 20px;
@@ -287,6 +310,21 @@
   }
 
   .navbar-links.is-open .navbar-link-phone {
+    animation: navLinkIn 0.35s ease forwards;
+    animation-delay: calc(var(--i) * 0.05s);
+  }
+
+  .navbar-admin-login {
+    justify-content: center;
+    margin-top: 14px;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  .navbar-links.is-open .navbar-admin-login {
     animation: navLinkIn 0.35s ease forwards;
     animation-delay: calc(var(--i) * 0.05s);
   }

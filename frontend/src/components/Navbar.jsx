@@ -59,6 +59,13 @@ export default function Navbar() {
             </svg>
             {SITE.phone}
           </a>
+          <Link
+            to="/admin/login"
+            className="navbar-admin-login"
+            onClick={() => setMenuOpen(false)}
+          >
+            Admin Sign In
+          </Link>
         </nav>
 
         <div className="navbar-actions">
