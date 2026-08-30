@@ -1,6 +1,6 @@
 # Mama Joy's Cosmetics and Collections
 
-A full online store for **Mama Joy's Cosmetics and Collections** (Bantama, Kumasi).
+A full online store for **Mama Joy's Cosmetics and Collections** (Bantima, Kumasi).
 The owner can upload products (name, price, description, images, category, stock),
 and customers can browse, add to bag, and pay securely in Ghana cedis (GHS) with
 **Paystack**.
@@ -191,7 +191,7 @@ Visit `http://localhost:5173`.
 ## 8. Business details baked into the site
 
 - **Name:** Mama Joy's Cosmetics and Collections
-- **Location:** Bantama, Kumasi
+- **Location:** Bantima, Kumasi
 - **Phone / WhatsApp:** 0244948390
 - **Currency:** Ghana Cedis (GHS)
 - **Theme:** Gold, White, and Black

@@ -10,7 +10,7 @@ import "./Home.css";
 export default function Home() {
   usePageMeta(
     null,
-    "Shop skincare, makeup, hair care, and beauty essentials in Bantama, Kumasi. Secure Paystack checkout in Ghana cedis, with delivery across Kumasi and beyond."
+    "Shop skincare, makeup, hair care, and beauty essentials in Bantima, Kumasi. Secure Paystack checkout in Ghana cedis, with delivery across Kumasi and beyond."
   );
   const [featured, setFeatured] = useState([]);
   const [loading, setLoading] = useState(true);

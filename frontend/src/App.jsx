@@ -15,6 +15,7 @@ import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import PaymentCallback from "./pages/PaymentCallback";
+import TrackOrder from "./pages/TrackOrder";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ReturnPolicy from "./pages/ReturnPolicy";
@@ -60,6 +61,7 @@ export default function App() {
             <Route path="/product/:id" element={<StorefrontLayout><ProductDetail /></StorefrontLayout>} />
             <Route path="/checkout" element={<StorefrontLayout><Checkout /></StorefrontLayout>} />
             <Route path="/payment/callback" element={<StorefrontLayout><PaymentCallback /></StorefrontLayout>} />
+            <Route path="/track-order" element={<StorefrontLayout><TrackOrder /></StorefrontLayout>} />
             <Route path="/about" element={<StorefrontLayout><About /></StorefrontLayout>} />
             <Route path="/contact" element={<StorefrontLayout><Contact /></StorefrontLayout>} />
             <Route path="/returns" element={<StorefrontLayout><ReturnPolicy /></StorefrontLayout>} />

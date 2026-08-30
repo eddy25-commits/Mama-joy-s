@@ -149,6 +149,10 @@
   opacity: 1;
 }
 
+.navbar-track-order {
+  white-space: nowrap;
+}
+
 .navbar-admin-login {
   display: inline-flex;
   align-items: center;

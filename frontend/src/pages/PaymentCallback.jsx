@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import api, { getErrorMessage } from "../api/client";
 import Loader from "../components/Loader";
+import { useCart } from "../context/CartContext";
 import { formatGHS } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import "./PaymentCallback.css";
 export default function PaymentCallback() {
   usePageMeta("Order Confirmation");
+  const { clearCart } = useCart();
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState("verifying"); // verifying | success | failed | error
   const [order, setOrder] = useState(null);
@@ -25,6 +27,9 @@ export default function PaymentCallback() {
       .get(`/payment/verify/${reference}`)
       .then((res) => {
         setOrder(res.data.order);
+        if (res.data.status === "success") {
+          clearCart();
+        }
         setStatus(res.data.status === "success" ? "success" : "failed");
         sessionStorage.removeItem("mjc_last_reference");
       })

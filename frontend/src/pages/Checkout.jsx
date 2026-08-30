@@ -70,10 +70,9 @@ export default function Checkout() {
       };
 
       const res = await api.post("/payment/initialize", payload);
-      // Persist the reference so the callback page can look it up even after
-      // Paystack redirects back and the cart/session state has been cleared.
+      // Keep the cart until the payment is confirmed. Clearing it immediately can
+      // make the bag appear empty before the customer reaches Paystack.
       sessionStorage.setItem("mjc_last_reference", res.data.reference);
-      clearCart();
       window.location.href = res.data.authorizationUrl;
     } catch (err) {
       setError(getErrorMessage(err));

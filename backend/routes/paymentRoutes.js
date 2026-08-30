@@ -111,6 +111,10 @@ router.post(
     // Paystack expects the amount in the lowest currency unit (pesewas for GHS)
     const amountInPesewas = Math.round(total * 100);
 
+    const callbackUrl =
+      process.env.PAYSTACK_CALLBACK_URL ||
+      `${process.env.CLIENT_ORIGIN || "http://localhost:5173"}/payment/callback`;
+
     const paystackResponse = await axios.post(
       `${PAYSTACK_BASE_URL}/transaction/initialize`,
       {
@@ -118,7 +122,7 @@ router.post(
         amount: amountInPesewas,
         currency: "GHS",
         reference,
-        callback_url: process.env.PAYSTACK_CALLBACK_URL,
+        callback_url: callbackUrl,
         metadata: {
           orderNumber,
           customerName: customer.name,

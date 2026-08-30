@@ -60,6 +60,13 @@ export default function Navbar() {
             {SITE.phone}
           </a>
           <Link
+            to="/track-order"
+            className="navbar-link navbar-track-order"
+            onClick={() => setMenuOpen(false)}
+          >
+            Track Order
+          </Link>
+          <Link
             to="/admin/login"
             className="navbar-admin-login"
             onClick={() => setMenuOpen(false)}
