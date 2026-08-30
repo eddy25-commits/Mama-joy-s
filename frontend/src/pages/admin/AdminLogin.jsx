@@ -46,6 +46,7 @@ export default function AdminLogin() {
             id="email"
             type="email"
             autoComplete="username"
+            placeholder="Enter your email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -59,6 +60,7 @@ export default function AdminLogin() {
               id="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
+              placeholder="Enter your password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -93,9 +95,14 @@ export default function AdminLogin() {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
+        <div className="admin-login-actions">
+          <button type="button" className="btn btn-outline btn-block admin-login-back" onClick={() => navigate("/")}>
+            Back
+          </button>
+          <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+        </div>
       </form>
     </div>
   );
