@@ -24,6 +24,7 @@ import NotFound from "./pages/NotFound";
 
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminChangePassword from "./pages/admin/AdminChangePassword";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminProductForm from "./pages/admin/AdminProductForm";
 import AdminDeliveryZones from "./pages/admin/AdminDeliveryZones";
@@ -72,6 +73,14 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/change-password"
+              element={
+                <ProtectedRoute>
+                  <AdminChangePassword />
                 </ProtectedRoute>
               }
             />

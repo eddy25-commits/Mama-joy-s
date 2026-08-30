@@ -47,4 +47,46 @@ router.get(
   })
 );
 
+// @route   PUT /api/auth/change-password
+// @desc    Change the currently logged in admin's password
+router.put(
+  "/change-password",
+  protect,
+  asyncHandler(async (req, res) => {
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      res.status(400);
+      throw new Error("Please provide your current password and a new password.");
+    }
+
+    if (newPassword.length < 8) {
+      res.status(400);
+      throw new Error("New password must be at least 8 characters long.");
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      res.status(400);
+      throw new Error("New passwords do not match.");
+    }
+
+    const admin = await Admin.findByPk(req.admin.id);
+    if (!admin) {
+      res.status(404);
+      throw new Error("Admin account not found.");
+    }
+
+    const isCurrentPasswordValid = await admin.matchPassword(currentPassword);
+    if (!isCurrentPasswordValid) {
+      res.status(401);
+      throw new Error("Current password is incorrect.");
+    }
+
+    admin.password = newPassword;
+    await admin.save();
+
+    res.json({ message: "Password updated successfully." });
+  })
+);
+
 module.exports = router;

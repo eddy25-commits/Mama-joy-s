@@ -66,6 +66,14 @@ export default function AdminLayout({ children }) {
               type="button"
               className="btn btn-outline btn-sm admin-logout-btn"
               style={{ "--i": links.length + 1 }}
+              onClick={() => navigate("/admin/change-password")}
+            >
+              Change Password
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm admin-logout-btn"
+              style={{ "--i": links.length + 2 }}
               onClick={handleLogout}
             >
               Log Out
