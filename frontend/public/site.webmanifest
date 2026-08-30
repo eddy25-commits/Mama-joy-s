@@ -1,7 +1,7 @@
 {
-  "name": "Mama Joy's Cosmetics and Collections",
-  "short_name": "Mama Joy's",
-  "description": "Quality skincare, makeup, and beauty essentials in Bantama, Kumasi. Shop online in Ghana cedis with secure Paystack checkout.",
+  "name": "Mama Joy Cosmetics",
+  "short_name": "Mama Joy",
+  "description": "Mama Joy Cosmetics beauty shop in Bantima, Kumasi, Ghana offering skincare, makeup, hair care, and fragrance products with secure Paystack checkout.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf7f0",
