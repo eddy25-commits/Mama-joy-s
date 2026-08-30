@@ -7,7 +7,7 @@ export const SITE = {
   phoneHref: "tel:+233244948390",
   whatsappHref: "https://wa.me/233244948390",
   currency: "GHS",
-  deliveryFeeKumasi: 20,
+  deliveryFeeKumasi: 0,
   deliveryFeeOther: 35,
   categories: [
     "Skincare",

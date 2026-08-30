@@ -25,6 +25,7 @@ export default function Checkout() {
   const isKumasi = form.city.trim().toLowerCase().includes("kumasi");
   const deliveryFee = isKumasi ? SITE.deliveryFeeKumasi : SITE.deliveryFeeOther;
   const total = useMemo(() => subtotal + deliveryFee, [subtotal, deliveryFee]);
+  const deliveryLabel = isKumasi ? "Free" : formatGHS(deliveryFee);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -176,7 +177,7 @@ export default function Checkout() {
           </div>
           <div className="checkout-summary-row">
             <span>Delivery ({isKumasi ? "Kumasi" : "Outside Kumasi"})</span>
-            <span>{formatGHS(deliveryFee)}</span>
+            <span>{deliveryLabel}</span>
           </div>
           <div className="checkout-summary-row checkout-summary-total">
             <span>Total</span>
