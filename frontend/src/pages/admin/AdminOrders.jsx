@@ -14,6 +14,7 @@ export default function AdminOrders() {
   const [error, setError] = useState("");
   const [expandedId, setExpandedId] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     api
@@ -32,6 +33,21 @@ export default function AdminOrders() {
       alert(getErrorMessage(err));
     } finally {
       setUpdatingId(null);
+    }
+  };
+
+  const handleDelete = async (order) => {
+    if (!window.confirm(`Delete order ${order.orderNumber}? This cannot be undone.`)) return;
+
+    setDeletingId(order._id);
+    try {
+      await api.delete(`/orders/${order._id}`);
+      setOrders((prev) => prev.filter((item) => item._id !== order._id));
+      setExpandedId(null);
+    } catch (err) {
+      alert(getErrorMessage(err));
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -115,6 +131,15 @@ export default function AdminOrders() {
                       ))}
                     </select>
                   </div>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline admin-delete-btn"
+                    disabled={deletingId === order._id}
+                    onClick={() => handleDelete(order)}
+                  >
+                    Delete Order
+                  </button>
                 </div>
               )}
             </div>

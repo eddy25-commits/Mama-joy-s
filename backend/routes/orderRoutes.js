@@ -5,6 +5,14 @@ const { protect } = require("../middleware/auth");
 
 const router = express.Router();
 
+const serializeOrder = (order) => {
+  const data = order && typeof order.toJSON === "function" ? order.toJSON() : { ...order };
+  if (data && data.id !== undefined && data._id === undefined) {
+    data._id = data.id;
+  }
+  return data;
+};
+
 // @route   GET /api/orders
 // @desc    Get all orders (admin only) - supports ?status=
 router.get(
@@ -15,7 +23,7 @@ router.get(
     const where = {};
     if (status) where.orderStatus = status;
     const orders = await Order.findAll({ where, order: [["createdAt", "DESC"]] });
-    res.json(orders);
+    res.json(orders.map(serializeOrder));
   })
 );
 
@@ -87,7 +95,24 @@ router.put(
     }
     order.orderStatus = orderStatus || order.orderStatus;
     await order.save();
-    res.json(order);
+    res.json(serializeOrder(order));
+  })
+);
+
+// @route   DELETE /api/orders/:id
+// @desc    Delete an order (admin only)
+router.delete(
+  "/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findByPk(req.params.id);
+    if (!order) {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+
+    await order.destroy();
+    res.json({ message: "Order removed" });
   })
 );
 
