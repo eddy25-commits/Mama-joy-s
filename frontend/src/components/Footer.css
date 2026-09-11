@@ -113,6 +113,21 @@
   color: rgba(255, 255, 255, 0.6);
   background: rgba(0, 0, 0, 0.15);
 }
+.footer-legal-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 10px;
+}
+.footer-legal-links a {
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer-legal-links a:hover {
+  color: #ffe6a8;
+}
 
 /* ---------- Accordion toggle (inert on desktop) ---------- */
 .footer-toggle {

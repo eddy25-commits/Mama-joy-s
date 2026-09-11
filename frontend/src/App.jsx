@@ -19,6 +19,7 @@ import TrackOrder from "./pages/TrackOrder";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ReturnPolicy from "./pages/ReturnPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
@@ -65,6 +66,7 @@ export default function App() {
             <Route path="/about" element={<StorefrontLayout><About /></StorefrontLayout>} />
             <Route path="/contact" element={<StorefrontLayout><Contact /></StorefrontLayout>} />
             <Route path="/returns" element={<StorefrontLayout><ReturnPolicy /></StorefrontLayout>} />
+            <Route path="/shipping" element={<StorefrontLayout><ShippingPolicy /></StorefrontLayout>} />
             <Route path="/privacy-policy" element={<StorefrontLayout><PrivacyPolicy /></StorefrontLayout>} />
             <Route path="/terms" element={<StorefrontLayout><TermsOfService /></StorefrontLayout>} />
 

@@ -95,6 +95,9 @@ export default function Footer() {
               <Link to="/returns">Return &amp; Refund Policy</Link>
             </p>
             <p>
+              <Link to="/shipping">Shipping &amp; Delivery Policy</Link>
+            </p>
+            <p>
               <Link to="/privacy-policy">Privacy Policy</Link>
             </p>
             <p>
@@ -107,6 +110,12 @@ export default function Footer() {
       <div className="footer-bottom">
         <div className="container">
           &copy; {new Date().getFullYear()} Mama Joy&rsquo;s Cosmetics and Collections. All rights reserved.
+          <nav className="footer-legal-links" aria-label="Legal links">
+            <Link to="/terms">Terms</Link>
+            <Link to="/privacy-policy">Privacy</Link>
+            <Link to="/returns">Returns &amp; Refunds</Link>
+            <Link to="/shipping">Shipping &amp; Delivery</Link>
+          </nav>
         </div>
       </div>
     </footer>

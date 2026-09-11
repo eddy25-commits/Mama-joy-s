@@ -30,7 +30,7 @@ export default function FAQ() {
     {
       question: "Do you ship outside Kumasi?",
       answer:
-        "Yes! We deliver to various locations across Ghana. Check our Shipping & Refund Policy for a complete list of delivery zones and applicable fees.",
+        "Yes! We deliver to various locations across Ghana. Check our Shipping & Delivery Policy for delivery times and information about delivery fees.",
     },
     {
       question: "What payment methods do you accept?",
@@ -45,7 +45,7 @@ export default function FAQ() {
     {
       question: "What is your return policy?",
       answer:
-        "We accept returns within 7 days of delivery for unused, unopened products in original packaging. Please refer to our Returns Policy for complete details.",
+        "We accept eligible returns and refund requests raised within 2 days of delivery for unused, unopened products in original packaging. Please refer to our Returns Policy for complete details.",
     },
     {
       question: "Are your products authentic?",
